@@ -1,0 +1,7 @@
+456198703 <INFO>    | -------------------------------------------------------------
+456198703 <INFO>    |                    SiSiMEX: Yellow Pages                     
+456198703 <INFO>    | -------------------------------------------------------------
+456198718 <INFO>    | 
+456198718 <INFO>    |  - Server Listen socket created
+456198718 <INFO>    |  - Socket Bind to interface 127.0.0.1:8000
+456198734 <INFO>    |  - Socket entered in Listen state...

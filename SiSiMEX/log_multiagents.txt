@@ -1,0 +1,15 @@
+457060421 <INFO>    | -------------------------------------------------------------
+457060437 <INFO>    |                     SiSiMEX Multi-Agents                     
+457060437 <INFO>    | -------------------------------------------------------------
+457060437 <INFO>    | 
+457060453 <INFO>    |  - Server Listen socket created
+457060468 <INFO>    |  - Socket Bind to interface 127.0.0.1:8000
+457060468 <INFO>    |  - Socket entered in Listen state...
+457060484 <INFO>    | Spawn MCC for node 1 contributing item 1 - constraint item 2
+457060484 <INFO>    | Spawn MCC for node 2 contributing item 2 - constraint item 3
+457060484 <INFO>    | Spawn MCC for node 3 contributing item 3 - constraint item 0
+457060500 <INFO>    | Spawn MCC for node 0 contributing item 0 - constraint item 9999
+457061687 <ERROR>   | TCPSocket::Connect() failed
+457062687 <ERROR>   | TCPSocket::Connect() failed
+457063703 <ERROR>   | TCPSocket::Connect() failed
+457064718 <ERROR>   | TCPSocket::Connect() failed
