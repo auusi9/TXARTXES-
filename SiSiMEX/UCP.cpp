@@ -6,7 +6,7 @@
 enum State
 {
 	ST_INIT,
-	// TODO: Add other states...
+	// TODO 1: Add other states...
 };
 
 UCP::UCP(Node *node, uint16_t requestedItemId, const AgentLocation &uccLocation) :
@@ -31,7 +31,7 @@ void UCP::update()
 		//setState(ST_WHATEVER_NEXT_STATE...);
 		break;
 
-	// TODO: Handle other states
+	// TODO 2: Handle other states
 
 	default:;
 	}
@@ -46,40 +46,40 @@ void UCP::finalize()
 void UCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader, InputMemoryStream &stream)
 {
 	PacketType packetType = packetHeader.packetType;
-	// TODO: Handle requests
+	// TODO 3: Handle requests
 }
 
 bool UCP::negotiationFinished() const {
-	// TODO
+	// TODO 4
 	return false;
 }
 
 bool UCP::negotiationAgreement() const {
-	// TODO
+	// TODO 5
 	return false;
 }
 
 
 void UCP::requestItem()
 {
-	// TODO
+	// TODO 6
 
 	//sendPacketToHost(ip, port, ostream);
 }
 
 void UCP::sendConstraint(uint16_t constraintItemId)
 {
-	// TODO
+	// TODO 7
 
 	//sendPacketToHost(ip, port, ostream);
 }
 
 void UCP::createChildMCP(uint16_t constraintItemId)
 {
-	// TODO
+	// TODO 8
 }
 
 void UCP::destroyChildMCP()
 {
-	// TODO
+	// TODO 9
 }

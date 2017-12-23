@@ -18,9 +18,9 @@ enum class PacketType
 	QueryMCCsForItem,
 	ReturnMCCsForItem,
 	// MCP <-> MCC
-	// TODO: Add message types
+	// TODO 1: Add message types
 	// UCP <-> UCC
-	// TODO: Add message types
+	// TODO 3: Add message types
 	Last
 };
 
@@ -106,11 +106,11 @@ public:
 
 // MCP <-> MCC
 
-// TODO: Add message classes
+// TODO 2: Add message classes
 
 
 // UCP <-> UCC
 
-// TODO: Add message classes
+// TODO 4: Add message classes
 
 

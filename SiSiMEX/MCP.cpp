@@ -7,7 +7,7 @@ enum State
 {
 	ST_INIT,
 	ST_REQUESTING_MCCs,
-	// TODO: Add other states
+	// TODO 1: Add other states
 };
 
 MCP::MCP(Node *node, uint16_t itemId) :
@@ -31,7 +31,7 @@ void MCP::update()
 		setState(ST_REQUESTING_MCCs);
 		break;
 
-	// TODO: Handle other states
+	// TODO 2: Handle other states
 
 	default:;
 	}
@@ -72,18 +72,18 @@ void MCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 		socket->Disconnect();
 	}
 
-	// TODO: Handle other responses
+	// TODO 3: Handle other responses
 }
 
 bool MCP::negotiationFinished() const
 {
-	// TODO
+	// TODO 4
 	return false;
 }
 
 bool MCP::negotiationAgreement() const
 {
-	// TODO
+	// TODO 5
 	return false;
 }
 
@@ -109,7 +109,7 @@ bool MCP::queryMCCsForItem(int itemId)
 
 bool MCP::sendNegotiationRequest(const AgentLocation &mccRegister)
 {
-	// TODO
+	// TODO 7
 
 	//return sendPacketToHost(hostIP, hostPort, stream);
 	return false;
@@ -117,10 +117,10 @@ bool MCP::sendNegotiationRequest(const AgentLocation &mccRegister)
 
 void MCP::createChildUCP(const AgentLocation &uccLoc)
 {
-	// TODO
+	// TODO 6
 }
 
 void MCP::destroyChildUCP()
 {
-	// TODO
+	// TODO 8
 }

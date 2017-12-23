@@ -4,7 +4,7 @@
 
 enum State
 {
-	// TODO: Add some states
+	// TODO 1: Add some states
 };
 
 UCC::UCC(Node *node, uint16_t contributedItemId, uint16_t constraintItemId) :
@@ -34,15 +34,15 @@ void UCC::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 {
 	PacketType packetType = packetHeader.packetType;
 
-	// TODO Receive requests and send back responses...
+	// TODO 2 Receive requests and send back responses...
 }
 
 bool UCC::negotiationFinished() const {
-	// TODO
+	// TODO 3
 	return false;
 }
 
 bool UCC::negotiationAgreement() const {
-	// TODO
+	// TODO 4
 	return false;
 }

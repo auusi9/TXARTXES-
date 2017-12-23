@@ -8,7 +8,7 @@ enum State
 	ST_REGISTERING,
 	ST_IDLE,
 
-	// TODO: Add other states ...
+	// TODO 1: Add other states ...
 	
 	ST_UNREGISTERING,
 	ST_FINISHED
@@ -39,7 +39,7 @@ void MCC::update()
 		}
 		break;
 
-	// TODO: Handle other states
+	// TODO 2: Handle other states
 	
 	case ST_FINISHED:
 		finish();
@@ -48,7 +48,7 @@ void MCC::update()
 
 void MCC::finalize()
 {
-	// TODO
+	// TODO 3
 }
 
 
@@ -63,18 +63,18 @@ void MCC::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 		setState(ST_FINISHED);
 		socket->Disconnect();
 	}
-	//else TODO handle other requests
+	//else TODO 4 handle other requests
 }
 
 bool MCC::negotiationFinished() const
 {
-	// TODO
+	// TODO 5
 	return false;
 }
 
 bool MCC::negotiationAgreement() const
 {
-	// TODO
+	// TODO 6
 	return false;
 }
 
@@ -116,10 +116,10 @@ void MCC::unregisterFromYellowPages()
 
 void MCC::createChildUCC()
 {
-	// TODO
+	// TODO 7
 }
 
 void MCC::destroyChildUCC()
 {
-	// TODO
+	// TODO 8
 }
