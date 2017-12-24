@@ -25,7 +25,7 @@ public:
 	// Whether or not the negotiation finished
 	bool negotiationFinished() const;
 
-	// Whether ir not there was a negotiation agreement
+	// Whether or not there was a negotiation agreement
 	bool negotiationAgreement() const;
 
 private:
@@ -37,6 +37,8 @@ private:
 	void createChildUCP(const AgentLocation &uccLoc);
 
 	void destroyChildUCP();
+
+	void selectMCC();
 
 	uint16_t _itemId;
 

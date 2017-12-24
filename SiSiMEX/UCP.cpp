@@ -63,7 +63,7 @@ bool UCP::negotiationAgreement() const {
 void UCP::requestItem()
 {
 	// TODO 6
-
+	
 	//sendPacketToHost(ip, port, ostream);
 }
 
