@@ -19,8 +19,14 @@ enum class PacketType
 	ReturnMCCsForItem,
 	// MCP <-> MCC
 	// TODO 1: Add message types
+	NegotiationProposalRequest,
+	NegotiationProposalAnswer,
 	// UCP <-> UCC
 	// TODO 3: Add message types
+	OfferRequest,
+	ConstraintAcceptanceRequest,
+	ConstraintAcceptanceAnswer,
+	RequestDelivery,
 	Last
 };
 
@@ -103,14 +109,62 @@ public:
 	}
 };
 
-
-// MCP <-> MCC
+// MCP <-> MCC - - - - - - - - - - - - - - - - - - - - - - - -
 
 // TODO 2: Add message classes
 
+class PacketNegotiationProposalRequest {
 
-// UCP <-> UCC
+};
+
+class PacketNegotiationProposalAnswer {
+public:
+	uint16_t uccID; // ID of UCC from MCC
+	void Read(InputMemoryStream &stream) {
+		stream.Read(uccID);
+	}
+	void Write(OutputMemoryStream &stream) {
+		stream.Write(uccID);
+	}
+};
+
+// UCP <-> UCC - - - - - - - - - - - - - - - - - - - - - - - -
 
 // TODO 4: Add message classes
 
+class PacketOfferRequest {
+public:
+	uint16_t offerID; // ID of MCP request
+	void Read(InputMemoryStream &stream) {
+		stream.Read(offerID);
+	}
+	void Write(OutputMemoryStream &stream) {
+		stream.Write(offerID);
+	}
+};
 
+class PacketConstraintAcceptanceRequest {
+public:
+	uint16_t constraintID; // ID of MCC constraint
+	void Read(InputMemoryStream &stream) {
+		stream.Read(constraintID);
+	}
+	void Write(OutputMemoryStream &stream) {
+		stream.Write(constraintID);
+	}
+};
+
+class PacketConstraintAcceptanceAnswer {
+public:
+	uint16_t constraintID; // ID of constraint item
+	void Read(InputMemoryStream &stream) {
+		stream.Read(constraintID);
+	}
+	void Write(OutputMemoryStream &stream) {
+		stream.Write(constraintID);
+	}
+};
+
+class PacketRequestDelivery {
+
+};
