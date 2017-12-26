@@ -5,6 +5,9 @@
 enum State
 {
 	// TODO 1: Add some states
+	ST_NEGOTIATION_START,
+	ST_WAITING_CONSTRAINT,
+	ST_NEGOTIATION_END
 };
 
 UCC::UCC(Node *node, uint16_t contributedItemId, uint16_t constraintItemId) :
@@ -13,7 +16,7 @@ UCC::UCC(Node *node, uint16_t contributedItemId, uint16_t constraintItemId) :
 	_constraintItemId(constraintItemId),
 	_negotiationAgreement(false)
 {
-	//setState(ST_WHATEVER_INITIAL_STATE ...);
+	setState(ST_NEGOTIATION_START);
 }
 
 UCC::~UCC()
@@ -35,14 +38,18 @@ void UCC::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 	PacketType packetType = packetHeader.packetType;
 
 	// TODO 2 Receive requests and send back responses...
+	if (state() == ST_NEGOTIATION_START && packetType == PacketType::OfferRequest) {
+
+	}
 }
 
 bool UCC::negotiationFinished() const {
 	// TODO 3
-	return false;
+	bool answer = state() == ST_NEGOTIATION_END;
+	return answer;
 }
 
 bool UCC::negotiationAgreement() const {
 	// TODO 4
-	return false;
+	return _negotiationAgreement;
 }

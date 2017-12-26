@@ -9,7 +9,9 @@ enum State
 	ST_IDLE,
 
 	// TODO 1: Add other states ...
-	
+	ST_NEGOTIATING,
+	ST_NEGOTIATION_END,
+
 	ST_UNREGISTERING,
 	ST_FINISHED
 };
@@ -40,6 +42,24 @@ void MCC::update()
 		break;
 
 	// TODO 2: Handle other states
+
+	case ST_REGISTERING:
+		break;
+
+	case ST_NEGOTIATING:
+		if (_ucc->negotiationFinished() == true) {
+			if (_ucc->negotiationAgreement() == true) {
+				setState(ST_NEGOTIATION_END);
+			}
+			else {
+				setState(ST_IDLE);
+			}
+			destroyChildUCC();
+		}
+		break;
+
+	case ST_UNREGISTERING:
+		break;
 	
 	case ST_FINISHED:
 		finish();
@@ -49,6 +69,10 @@ void MCC::update()
 void MCC::finalize()
 {
 	// TODO 3
+	destroyChildUCC();
+	//finish();
+	unregisterFromYellowPages();
+	setState(ST_UNREGISTERING);
 }
 
 
@@ -62,20 +86,45 @@ void MCC::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 	else if (state() == ST_UNREGISTERING && packetType == PacketType::UnregisterMCCAck) {
 		setState(ST_FINISHED);
 		socket->Disconnect();
+	}	// TODO 4 handle other requests
+	else if (state() == ST_IDLE && packetType == PacketType::NegotiationProposalRequest) {
+		// First, create the UCC
+		createChildUCC();
+
+		// Create message header and data
+		PacketHeader packetHead;
+		packetHead.packetType = PacketType::NegotiationProposalAnswer;
+		packetHead.srcAgentId = id();
+		packetHead.dstAgentId = packetHeader.srcAgentId;
+		PacketNegotiationProposalAnswer packetData;
+		packetData.uccID = _ucc->id();
+
+		// Serialize message
+		OutputMemoryStream stream;
+		packetHead.Write(stream);
+		packetData.Write(stream);
+
+		const std::string hostIP = socket->RemoteAddress().GetIPString();
+		const int port = LISTEN_PORT_AGENTS;
+
+		sendPacketToHost(hostIP, port, stream);
+
+		setState(ST_NEGOTIATING);
 	}
-	//else TODO 4 handle other requests
 }
 
 bool MCC::negotiationFinished() const
 {
 	// TODO 5
-	return false;
+	bool answer = state() == ST_NEGOTIATION_END;
+	return answer;
 }
 
 bool MCC::negotiationAgreement() const
 {
 	// TODO 6
-	return false;
+	bool answer = state() == ST_NEGOTIATION_END;
+	return answer;
 }
 
 bool MCC::registerIntoYellowPages()
@@ -117,9 +166,15 @@ void MCC::unregisterFromYellowPages()
 void MCC::createChildUCC()
 {
 	// TODO 7
+	_ucc.reset(new UCC(node(), _contributedItemId, _constraintItemId));
+	g_AgentContainer->addAgent(_ucc);
 }
 
 void MCC::destroyChildUCC()
 {
 	// TODO 8
+	if (_ucc != nullptr) {
+		_ucc->finalize();
+		_ucc.reset();
+	}
 }

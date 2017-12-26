@@ -26,7 +26,7 @@ public:
 	// Whether or not the negotiation finished
 	bool negotiationFinished() const;
 
-	// Whether ir not there was a negotiation agreement
+	// Whether or not there was a negotiation agreement
 	bool negotiationAgreement() const;
 
 private:
