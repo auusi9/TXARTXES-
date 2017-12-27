@@ -12,11 +12,11 @@ enum State
 	ST_NEGOTIATION_END
 };
 
-UCP::UCP(Node *node, uint16_t requestedItemId, const AgentLocation &uccLocation, MCP &mcpParent) :
+UCP::UCP(Node *node, uint16_t requestedItemId, const AgentLocation &uccLocation, MCP* mcpParent) :
 	Agent(node),
 	_requestedItemId(requestedItemId),
 	_uccLocation(uccLocation),
-	_mcpParent(&mcpParent),
+	_mcpParent(mcpParent),
 	_negotiationAgreement(false)
 {
 	setState(ST_INIT);

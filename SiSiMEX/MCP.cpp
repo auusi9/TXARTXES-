@@ -64,7 +64,7 @@ void MCP::update()
 
 void MCP::selectMCC()
 {
-	if (_mccRegisterIndex >= _mccRegisters.size())
+	if (_mccRegisterIndex <= _mccRegisters.size())
 	{
 		sendNegotiationRequest(_mccRegisters[_mccRegisterIndex]);
 		setState(ST_NEGOTIATION_START);
@@ -176,7 +176,7 @@ void MCP::createChildUCP(const AgentLocation &uccLoc)
 {
 	// TODO 
 	destroyChildUCP();
-	_ucp.reset(new UCP(node(), _itemId, uccLoc, *this));
+	_ucp.reset(new UCP(node(), _itemId, uccLoc, this));
 	g_AgentContainer->addAgent(_ucp);
 }
 

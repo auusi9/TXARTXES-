@@ -91,7 +91,7 @@ bool MultiAgentApplication::initialize()
 	_nodes[2]->itemList().addItem(Item(2));
 	_nodes[3]->itemList().addItem(Item(3));
 
-	spawnMCC(1, 1, 2); // Node 1 offers 1 but wants 2
+	spawnMCC(1, 1); // Node 1 offers 1 but wants 2
 	spawnMCC(2, 2, 3); // Node 2 offers 2 but wants 3
 	spawnMCC(3, 3, 0); // Node 3 offers 3 but wants 0
 
