@@ -77,20 +77,6 @@ void UCC::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 
 		if (packetData.constraintID == _constraintItemId) {
 			// Create message header and data
-			PacketHeader packetHead;
-			packetHead.packetType = PacketType::RequestDelivery;
-			packetHead.srcAgentId = id();
-			packetHead.dstAgentId = packetHeader.srcAgentId;
-			PacketRequestDelivery packetData;
-			packetData.contributionID = _contributedItemId;
-
-			// Serialize message
-			OutputMemoryStream stream;
-			packetHead.Write(stream);
-			packetData.Write(stream);
-
-			// When do we have to use "SendPacket()" over "sendPacketToHost(hostIP, port, stream)" ?
-			socket->SendPacket(stream.GetBufferPtr(), stream.GetSize());
 
 			setState(ST_NEGOTIATION_END);
 			_negotiationAgreement = true;
@@ -103,8 +89,7 @@ void UCC::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 
 bool UCC::negotiationFinished() const {
 	// TODO 3
-	bool answer = state() == ST_NEGOTIATION_END;
-	return answer;
+	return state() == ST_NEGOTIATION_END;
 }
 
 bool UCC::negotiationAgreement() const {

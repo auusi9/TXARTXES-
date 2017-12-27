@@ -34,7 +34,7 @@ void UCP::update()
 		requestItem();
 		setState(ST_OFFER_REQUEST);
 		break;
-	// TODO 2: Handle other states
+	// TODO : Handle other states
 	case ST_SEARCHING_CONSTRAINT:
 		if (_mcp->negotiationFinished()) {
 			sendConstraint(_mcp->requestedItemId());
@@ -66,11 +66,6 @@ void UCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 		if (packetData.constraintID == NULL_ITEM_ID) {
 			setState(ST_NEGOTIATION_END);
 			_negotiationAgreement = true;
-		}
-		else if (node()->HasItem(packetData.constraintID)) {
-			setState(ST_NEGOTIATION_END);
-			_negotiationAgreement = true;
-			_mcpParent->setContributedItemId(packetData.constraintID);
 		}
 		else {
 			createChildMCP(packetData.constraintID);
@@ -119,7 +114,7 @@ void UCP::sendConstraint(uint16_t constraintItemId)
 	packetHead.srcAgentId = id();
 	packetHead.dstAgentId = _uccLocation.agentId;
 	PacketConstraintAcceptanceAnswer packetData;
-	packetData.constraintID = _requestedItemId;
+	packetData.constraintID = constraintItemId;
 
 	// Serialize message
 	OutputMemoryStream stream;
