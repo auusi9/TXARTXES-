@@ -88,7 +88,6 @@ void MCC::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 		socket->Disconnect();
 	}	// TODO 4 handle other requests
 	else if (state() == ST_IDLE && packetType == PacketType::NegotiationProposalRequest) {
-		// First, create the UCC
 		createChildUCC();
 
 		// Create message header and data

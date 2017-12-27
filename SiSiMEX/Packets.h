@@ -166,5 +166,12 @@ public:
 };
 
 class PacketRequestDelivery {
-
+public:
+	uint16_t contributionID; // ID of the contributed item of UCC/MCC
+	void Read(InputMemoryStream &stream) {
+		stream.Read(contributionID);
+	}
+	void Write(OutputMemoryStream &stream) {
+		stream.Write(contributionID);
+	}
 };
