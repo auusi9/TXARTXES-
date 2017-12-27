@@ -17,6 +17,8 @@ public:
 	ItemList &itemList() { return _itemList; }
 	const ItemList &itemList() const { return _itemList; }
 
+	bool HasItem(int item);
+
 private:
 
 	ItemList _itemList; /**< All items owned by this node. */
