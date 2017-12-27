@@ -103,10 +103,7 @@ void MCC::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 		packetHead.Write(stream);
 		packetData.Write(stream);
 
-		const std::string hostIP = socket->RemoteAddress().GetIPString();
-		const int port = LISTEN_PORT_AGENTS;
-
-		sendPacketToHost(hostIP, port, stream);
+		sendPacketToHost(socket->RemoteAddress().GetIPString(), LISTEN_PORT_AGENTS, stream);
 
 		setState(ST_NEGOTIATING);
 	}

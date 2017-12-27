@@ -16,6 +16,7 @@ enum State
 MCP::MCP(Node *node, uint16_t itemId) :
 	Agent(node),
 	_itemId(itemId),
+	_contributedItemId(NULL_ITEM_ID),
 	_negotiationAgreement(false)
 {
 	setState(ST_INIT);
@@ -173,7 +174,7 @@ void MCP::createChildUCP(const AgentLocation &uccLoc)
 {
 	// TODO 
 	destroyChildUCP();
-	_ucp.reset(new UCP(node(), _itemId, uccLoc));
+	_ucp.reset(new UCP(node(), _itemId, uccLoc, *this));
 	g_AgentContainer->addAgent(_ucp);
 }
 

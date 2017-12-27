@@ -6,7 +6,7 @@ enum State
 {
 	// TODO 1: Add some states
 	ST_NEGOTIATION_START,
-	ST_NEGOTIATING_CONSTRAINT,
+	ST_WAITING_CONSTRAINT,
 	ST_NEGOTIATION_END
 };
 
@@ -64,14 +64,14 @@ void UCC::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 				_negotiationAgreement = true;
 			}
 			else {
-				setState(ST_NEGOTIATING_CONSTRAINT);
+				setState(ST_WAITING_CONSTRAINT);
 			}
 		}
 		else {
 			// ERROR (dunno if this could ever happen)
 		}
 	}
-	else if (state() == ST_NEGOTIATING_CONSTRAINT && packetType == PacketType::ConstraintAcceptanceAnswer) {
+	else if (state() == ST_WAITING_CONSTRAINT && packetType == PacketType::ConstraintAcceptanceAnswer) {
 		PacketConstraintAcceptanceAnswer packetData;
 		packetData.Read(stream);
 

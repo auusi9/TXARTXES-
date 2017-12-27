@@ -19,9 +19,9 @@ void Node::initialize()
 
 bool Node::HasItem(int item)
 {
-	for (auto items : _itemList.items) 
+	for (auto items : _itemList.items()) 
 	{
-		if (items == item)
+		if (items.id() == item)
 			return true;
 	}
 
