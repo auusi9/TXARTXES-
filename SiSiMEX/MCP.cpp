@@ -46,17 +46,18 @@ void MCP::update()
 			if (_ucp->negotiationAgreement())
 			{
 				//Negotiation succeed
+				_negotiationAgreement = true;
+				setState(ST_NEGOTIATION_END);
 			}
 			else
 			{
 				//Negotiation Failed
+				_mccRegisterIndex++;
+				setState(ST_SELECTING_MCC);
 			}
+			destroyChildUCP();
 		}
 		break;
-	case ST_NEGOTIATION_END:
-		break;
-	// TODO : Handle other states
-
 	default:;
 	}
 }
@@ -108,6 +109,7 @@ void MCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 	}
 	else if (state() == ST_NEGOTIATION_START && packetType == PacketType::NegotiationProposalAnswer)
 	{
+		//TODO
 		setState(ST_NEGOTIATING);
 
 		PacketNegotiationProposalAnswer packetData;
@@ -119,21 +121,21 @@ void MCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 		uccLoc.agentId = packetData.uccID;
 
 		createChildUCP(uccLoc);
-	}
 
-	// TODO 3: Handle other responses
+		socket->Disconnect();
+	}
 }
 
 bool MCP::negotiationFinished() const
 {
-	// TODO 
-	return false;
+	//TODO
+	return state() == ST_NEGOTIATION_END;
 }
 
 bool MCP::negotiationAgreement() const
 {
-	// TODO 
-	return false;
+	//TODO
+	return _negotiationAgreement;
 }
 
 

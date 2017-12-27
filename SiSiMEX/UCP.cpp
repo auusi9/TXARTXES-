@@ -70,7 +70,7 @@ void UCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 		else if (node()->HasItem(packetData.constraintID)) {
 			setState(ST_NEGOTIATION_END);
 			_negotiationAgreement = true;
-
+			_mcpParent->setContributedItemId(packetData.constraintID);
 		}
 		else {
 			createChildMCP(packetData.constraintID);
