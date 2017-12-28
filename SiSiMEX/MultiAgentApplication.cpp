@@ -127,7 +127,6 @@ void MultiAgentApplication::update()
 		if (mcp->negotiationFinished()) {
 			if (mcp->negotiationAgreement()) {
 				Node *node = mcp->node();
-				node->itemList().removeItem(mcp->contributedItemId());
 				node->itemList().addItem(mcp->requestedItemId());
 			}
 			mcp->finalize();

@@ -16,7 +16,6 @@ enum State
 MCP::MCP(Node *node, uint16_t itemId) :
 	Agent(node),
 	_itemId(itemId),
-	_contributedItemId(NULL_ITEM_ID),
 	_negotiationAgreement(false)
 {
 	setState(ST_INIT);
@@ -84,7 +83,7 @@ void MCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 	const PacketType packetType = packetHeader.packetType;
 	if (state() == ST_REQUESTING_MCCs && packetType == PacketType::ReturnMCCsForItem)
 	{
-		iLog << "OnPacketReceived PacketType::ReturnMCCsForItem " << _itemId;
+		iLog << "Received: ReturnMCCsForItem [id: " << _itemId << "]";
 
 		// Read the packet
 		PacketReturnMCCsForItem packetData;
@@ -94,8 +93,8 @@ void MCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 		{
 			uint16_t agentId = mccdata.agentId;
 			const std::string &hostIp = mccdata.hostIP;
-			uint16_t hostPort = mccdata.hostPort;
-			iLog << " - MCC: " << agentId << " - host: " << hostIp << ":" << hostPort;
+			uint16_t hostPort = mccdata.hostPort;			
+			iLog << "   MCC: " << agentId << "  |  host: " << hostIp << ":" << hostPort;
 		}
 
 		// Collect MCC compatible from YP
@@ -110,6 +109,8 @@ void MCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 	else if (state() == ST_NEGOTIATION_START && packetType == PacketType::NegotiationProposalAnswer)
 	{
 		//TODO
+		iLog << "Received: NegotiationProposalAnswer";
+
 		setState(ST_NEGOTIATING);
 
 		PacketNegotiationProposalAnswer packetData;
@@ -123,6 +124,11 @@ void MCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 		createChildUCP(uccLoc);
 
 		socket->Disconnect();
+
+		uint16_t uccId = packetData.uccID;
+		const std::string &hostIp = socket->RemoteAddress().GetIPString();
+		iLog << "   UCC: " << uccId << "  |  host: " << hostIp << ":" << LISTEN_PORT_AGENTS;
+
 	}
 }
 

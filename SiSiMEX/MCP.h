@@ -16,10 +16,6 @@ public:
 
 	// Getters
 	uint16_t requestedItemId() const { return _itemId; }
-	uint16_t contributedItemId() const { return _contributedItemId; }
-
-	// Setters
-	void setContributedItemId(uint16_t itemId) { _contributedItemId = itemId; }
 
 	void update() override;
 	void finalize() override;
@@ -45,8 +41,6 @@ private:
 	void selectMCC();
 
 	uint16_t _itemId;
-
-	uint16_t _contributedItemId;
 
 	int _mccRegisterIndex; /**< Iterator through _mccRegisters. */
 	std::vector<AgentLocation> _mccRegisters; /**< MCCs returned by the YP. */

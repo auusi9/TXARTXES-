@@ -9,6 +9,7 @@ enum State
 	// TODO 1: Add other states...
 	ST_OFFER_REQUEST,
 	ST_SEARCHING_CONSTRAINT,
+	ST_WAITING_CONFIRMATION,
 	ST_NEGOTIATION_END
 };
 
@@ -38,9 +39,9 @@ void UCP::update()
 	case ST_SEARCHING_CONSTRAINT:
 		if (_mcp->negotiationFinished()) {
 			sendConstraint(_mcp->requestedItemId());
-			setState(ST_NEGOTIATION_END);
 			_negotiationAgreement = _mcp->negotiationAgreement();
 			destroyChildMCP();
+			setState(ST_WAITING_CONFIRMATION);
 		}
 		break;
 	default:;
@@ -58,7 +59,8 @@ void UCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 	PacketType packetType = packetHeader.packetType;
 	// TODO 3: Handle requests
 	if (state() == ST_OFFER_REQUEST && packetType == PacketType::ConstraintAcceptanceRequest) {
-		
+				iLog << "Received: ConstraintAcceptanceRequest";
+
 		// Read the packet
 		PacketConstraintAcceptanceRequest packetData;
 		packetData.Read(stream);
@@ -72,12 +74,25 @@ void UCP::OnPacketReceived(TCPSocketPtr socket, const PacketHeader &packetHeader
 			setState(ST_SEARCHING_CONSTRAINT);
 		}
 	}
+	else if (state() == ST_WAITING_CONFIRMATION && packetType == PacketType::AgreementConfirmation) {
+		// Read the packet
+		PacketAgreementConfirmation packetData;
+		packetData.Read(stream);
+
+		if (packetData.confirmation == true) {
+			iLog << "Received: AgreementConfirmation [True]";
+			setState(ST_NEGOTIATION_END);
+		}
+		else {
+			// "ERROR" (maybe a later application will be added)
+			iLog << "Received: AgreementConfirmation [False]";
+		}
+	}
 }
 
 bool UCP::negotiationFinished() const {
 	// TODO 4
-	bool answer = state() == ST_NEGOTIATION_END;
-	return answer;
+	return state() == ST_NEGOTIATION_END;
 }
 
 bool UCP::negotiationAgreement() const {

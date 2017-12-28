@@ -26,6 +26,7 @@ enum class PacketType
 	OfferRequest,
 	ConstraintAcceptanceRequest,
 	ConstraintAcceptanceAnswer,
+	AgreementConfirmation,
 	Last
 };
 
@@ -133,7 +134,7 @@ public:
 
 class PacketOfferRequest {
 public:
-	uint16_t offerID; // ID of MCP request
+	uint16_t offerID; // ID of MCP requested item
 	void Read(InputMemoryStream &stream) {
 		stream.Read(offerID);
 	}
@@ -161,5 +162,16 @@ public:
 	}
 	void Write(OutputMemoryStream &stream) {
 		stream.Write(constraintID);
+	}
+};
+
+class PacketAgreementConfirmation {
+public:
+	bool confirmation; // Confirmation of all trade, in case something requires it to be false. 
+	void Read(InputMemoryStream &stream) {
+		stream.Read(confirmation);
+	}
+	void Write(OutputMemoryStream &stream) {
+		stream.Write(confirmation);
 	}
 };
